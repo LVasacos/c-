@@ -79,7 +79,7 @@ bool blstr_substr(BLString src, int pos, int len, BLString *sub) {
 
     while (temp != NULL && remaining > 0) {
         int addnum = (remaining <= BLOCK_SIZE - offset) ? remaining : (BLOCK_SIZE - offset);  
-        Block *new_block = (Block *)malloc(sizeof(Block));
+        Block *new_block = (Block *)malloc(sizeof(Block));    //动态内存就需要malloc申请内存，比如不确定大小的链表；记得释放内存。 申请Block大小的内存并且强制转换为Block类型。
         if (new_block == NULL) {
             Block *clean = sub->head;
             while (clean != NULL) {
