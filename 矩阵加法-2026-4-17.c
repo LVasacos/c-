@@ -57,7 +57,7 @@ bool add_matrix(const TSMatrix *pM, const TSMatrix *pN, TSMatrix *pQ){
         else{ //M当前标记的节点和N重合
             if(pM->data[o].e+pN->data[p].e==0){o++; p++;} //和为0则跳过，不计入
             else{
-                 pQ->data[k].e=pM->data[o].e+pN->data[p].e ;
+                 pQ->data[k].e=pM->data[o].e+pN->data[p].e ; 
                  pQ->data[k].i=pN->data[p].i;
                  pQ->data[k].j=pN->data[p].j;
                  pQ->len++;
@@ -67,8 +67,8 @@ bool add_matrix(const TSMatrix *pM, const TSMatrix *pN, TSMatrix *pQ){
             }
         }  
     }
-    if(o>pM->len-1 && p<=pN->len-1){
-        while(p<=pN->len-1){
+    if(o>pM->len-1 && p<=pN->len-1){ //N还没录完M就没了
+        while(p<=pN->len-1){  //直接将N剩余的录入
             pQ->data[k].e=pN->data[p].e;
             pQ->data[k].i=pN->data[p].i;
             pQ->data[k].j=pN->data[p].j;
@@ -77,8 +77,8 @@ bool add_matrix(const TSMatrix *pM, const TSMatrix *pN, TSMatrix *pQ){
             pQ->len++;
         }
     }    
-    else if(o<=pM->len-1 && p>pN->len-1){
-        while(o<=pM->len-1){
+    else if(o<=pM->len-1 && p>pN->len-1){//M还没录完N就没了
+        while(o<=pM->len-1){ //直接将M剩余的录入
             pQ->data[k].e=pM->data[o].e;
             pQ->data[k].i=pM->data[o].i;
             pQ->data[k].j=pM->data[o].j;
@@ -96,6 +96,8 @@ bool add_matrix(const TSMatrix *pM, const TSMatrix *pN, TSMatrix *pQ){
     
     }
 /*
-1.认知错误，稀疏矩阵不是所有元都需要存储一个值，依据题意只存储非零元，否则浪费空间；已经声明了需要返回的矩阵不需要malloc，已经申请好了空间，创建并返回才需要；
-2.
+1.认知错误，稀疏矩阵不是所有元都需要存储一个值，依据题意只存储非零元，否则浪费空间；已经声明了需要返回的矩阵不需要malloc，已经申请好了空间。pQ是二级指针/创建并返回才需要；
+2.注意处理每一个需要自增的变量
+3.区分"->"和"." , 指针才用箭头
+4.指针才可以为NULL,数组结构什么的不行
 */
