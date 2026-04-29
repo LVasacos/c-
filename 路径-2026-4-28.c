@@ -42,7 +42,7 @@ bool find_path(BiTNode* root, BiTNode* node, Stack* s){ //找路函数
     if(root==NULL || node==NULL){return false;}   //检查  
     push(s,root);  //根入栈
     if(root==node){return true;} //找到就返回true
-    if(find_path(root->left,  node, s)){return true;} //递归，找到就返回true 
+    if(find_path(root->left,  node, s)){return true;} //递归，找到就返回true ————>短路剪枝，节省时间&空间
     if(find_path(root->right,  node, s)){return true;}
     
     BiTNode* temp;//声明临时变量，没找到就出栈，递归可以出栈本身的栈项  
