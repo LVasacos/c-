@@ -35,9 +35,9 @@ bool is_empty(Stack* S);  // 栈为空时返回 true，否则返回 false
 /*
 初始思路：要求采用非递归，那就采用双指针，一个pre指针一个temp指针，如果temp指向的结点没有子结点，说明达到这一分支的栈底，可是如何排序？
 如果采用双层循环，外层持续向left分支传递，内层持续向right分支传递呢？
-事实上不行，那就先处理每一个左节点，同时用栈记录有右节点的节点（后进先出），一旦达到一个分支的栈底（if），就弹出一个节点，它是记录栈内最深的节点，
-然后第一次先往右转，将其变为下一个循环的父节点，之后下一个循环继续遍历，同时记录，这样就不需要双指针，只需要采用一个while循环，条件为栈不为空且
-或当前节点有子结点。
+事实上不行，那就先处理每一个节点，将每一个节点入栈，一旦达到一个分支的栈底（if），就弹出一个节点，它是记录栈内最深的节点，
+然后右转，将其变为下一个循环的父节点，之后下一个循环继续遍历，同时记录，这样就不需要双指针，只需要采用两个while循环，条件为
+当前节点不为NULL且栈不空 和 当前节点不为NULL
 */
 
 #include <stdlib.h>
@@ -45,6 +45,18 @@ bool is_empty(Stack* S);  // 栈为空时返回 true，否则返回 false
 #include "bitree.h" //请不要删除，否则检查不通过
 
 void pre_order(BiTree root){
-
+    if(root==NULL){return;}
+    Stack q;
+    init_stack(&q);//初始化记录栈
+    BiTNode* temp=root;
+    while(temp!=NULL || !is_empty(&q)){
+        while(temp!=NULL ){
+            visit_node(temp);
+            push(&q,temp);
+            temp=temp->left;
+        }
+        pop(&q,&temp);
+        temp=temp->right;
+    }
 
 }
